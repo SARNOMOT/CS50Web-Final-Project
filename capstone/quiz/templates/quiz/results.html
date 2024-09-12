@@ -1,0 +1,33 @@
+{% extends 'quiz/layout.html' %}
+{% load static %}
+
+{% block title %}
+    Quiz Results
+{% endblock %}
+
+{% block body %}
+    <h1>Quiz Results</h1>
+    <div style="padding-left: 5px;">
+        <a href="{% url 'quiz:index' %}" class="btn btn-primary" >Go Back</a>
+    </div>
+    <hr>
+    
+    <ul>
+        <!-- Result Details -->
+        {% if result.user == result.user.username %}
+            {% for result in results %}
+                <li>
+                    <strong>Quiz Name:</strong> {{ result.quiz.name }}<br>
+                    <strong>User Name:</strong> {{ result.user.username }}<br>
+                    <strong>Score:</strong> {{ result.score }}<br>
+                    {% if result.passed == True%}
+                        <strong>Passed:</strong> Yes
+                    {% else %}
+                        <strong>Passed:</strong> No
+                    {% endif %}
+                </li>
+            {% endfor %}
+        {% endif %}
+    </ul>
+
+{% endblock %}

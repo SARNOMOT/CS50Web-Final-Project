@@ -1,0 +1,38 @@
+{% extends 'quiz/layout.html' %}
+{% load static %}
+
+{% block title %}
+    {{obj.name}}
+{% endblock %}
+
+{% block body %}
+<!-- Quiz Header -->
+    
+        <div class="col">
+        <h3>{{obj.name}}</h3>
+        <h4>Score to pass: {{ obj.required_score }}%</h4>  
+        </div>
+        <h2 class="col text" id="timer-box" style="color: red; "></h1>
+    
+    <a href="{% url 'quiz:index' %}" class="btn btn-danger" style="margin-left: 5px;">End Session</a>
+    <!-- Quiz Form Section -->
+    <br>
+    <div style="margin-left: 10px;">    
+        {% if user.is_authenticated %}
+            <form id="quiz-form" class="mt-3 mb-3" >
+                {% csrf_token %}
+                <input type="hidden" name="my_csrf_token" value="{{ csrf_token }}">
+
+                <div id="quiz-box"></div>
+                <button type="submit" class="btn btn-primary mt-3" id="submit-quiz" >Save</button>
+            </form>
+        {% else %}
+            <hr>
+            <h1 style="color: red;">You need to <a href="{% url 'quiz:login' %}">login</a> to start the quiz.</h1>
+        {% endif %}
+    </div>
+
+    
+    <script src="{% static 'quiz/quiz.js' %}"></script>
+{% endblock %}
+
